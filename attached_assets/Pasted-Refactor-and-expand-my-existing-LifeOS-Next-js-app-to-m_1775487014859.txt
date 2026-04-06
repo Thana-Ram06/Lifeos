@@ -1,0 +1,161 @@
+Refactor and expand my existing LifeOS Next.js app to make it feel like a complete premium SaaS landing page similar to tpot.cc.
+
+IMPORTANT:
+- Do NOT rebuild the project
+- Improve and extend the existing UI
+- Keep everything minimal, clean, and typography-focused
+
+---
+
+🎯 GOAL
+
+Make the page feel:
+- Bigger and more complete
+- More professional and trustworthy
+- Like a real product website (not just a tool)
+
+---
+
+📐 ADD NEW SECTIONS (ABOVE FOOTER)
+
+Create a new content section placed between the result section and footer.
+
+Use:
+- max-w-3xl or max-w-4xl
+- mx-auto
+- px-6
+- mt-24
+- space-y-16
+- text-center (except FAQ answers can be left-aligned)
+
+---
+
+🔹 SECTION 1: ABOUT
+
+Heading:
+"What is LifeOS?"
+
+Text:
+LifeOS is an AI-powered life simulation system that helps you visualize your future based on your current direction.
+
+By combining your age, goals, and realistic growth patterns, it generates a structured timeline of your life including milestones, income progression, and key turning points.
+
+It’s not just prediction — it’s perspective.
+
+---
+
+🔹 SECTION 2: HOW IT WORKS
+
+Heading:
+"How it works"
+
+Steps:
+1. Define your starting point  
+Enter your current age and your life goal
+
+2. AI simulates your journey  
+The system generates a realistic life path based on patterns
+
+3. Visualize your future  
+Get a timeline with milestones, income growth, and events
+
+Display:
+- Clean vertical layout
+- Minimal spacing
+- No icons needed
+
+---
+
+🔹 SECTION 3: FEATURES
+
+Heading:
+"What you get"
+
+Content:
+• 15-year life timeline  
+• Income growth projection  
+• Key life milestones  
+• Realistic challenges and setbacks  
+• Instant results without signup  
+
+Style:
+- Simple list
+- Minimal design
+- No heavy cards
+
+---
+
+🔹 SECTION 4: WHY LIFEOS
+
+Heading:
+"Why LifeOS?"
+
+Text:
+Most people don’t fail because they lack ability — they fail because they lack direction.
+
+LifeOS gives you a clear perspective of what your future could look like, helping you make better decisions today.
+
+Your future isn’t fixed — but your direction matters.
+
+---
+
+🔹 SECTION 5: FAQ
+
+Heading:
+"Frequently asked questions"
+
+Add 3 items:
+
+Q: Is this prediction accurate?  
+A: No, it’s a simulation based on patterns, not a guaranteed future.
+
+Q: Do I need to sign up?  
+A: No, you can use LifeOS instantly.
+
+Q: Can I trust the results?  
+A: Use it as guidance, not absolute truth.
+
+Style:
+- Questions slightly bold
+- Answers muted
+- Clean spacing
+- No borders or heavy UI
+
+---
+
+🎨 DESIGN RULES
+
+- Follow tpot.cc style strictly
+- Typography first, not visuals
+- No shadows
+- Only soft borders where needed
+- Large whitespace
+
+Headings:
+- Instrument Serif
+- text-3xl md:text-4xl
+
+Text:
+- Inter
+- text-gray-400 (dark mode)
+
+---
+
+📱 RESPONSIVENESS
+
+- Fully centered on all screen sizes
+- Proper spacing on mobile
+- No overflow issues
+
+---
+
+⚡ FINAL RESULT
+
+The page should:
+- Feel like a complete product website
+- Look minimal and premium
+- Increase user trust and engagement
+- Match tpot.cc level simplicity
+
+Do NOT overdesign.
+Keep everything clean and elegant.

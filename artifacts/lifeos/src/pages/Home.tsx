@@ -353,14 +353,103 @@ export default function Home() {
           )}
         </AnimatePresence>
 
-        {/* About anchor */}
-        <section id="about" className="mt-32 pt-16 border-t border-border">
-          <h3 className="font-serif text-2xl mb-3">About LifeOS</h3>
-          <p className="text-muted-foreground font-light text-sm leading-relaxed max-w-xl">
-            LifeOS uses AI to generate a personalized 15-year life simulation based on your age and goals. 
-            It is a thought experiment — a mirror that shows one possible version of your future to help you think clearly about the present.
-          </p>
-        </section>
+        {/* ── Landing sections ── */}
+        <div id="about" className="mt-24 space-y-24">
+
+          {/* 1. What is LifeOS */}
+          <section className="text-center space-y-5 border-t border-border pt-20">
+            <h2 className="font-serif text-3xl md:text-4xl">What is LifeOS?</h2>
+            <p className="text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto">
+              LifeOS is an AI-powered life simulation system that helps you visualize your future based on your current direction.
+            </p>
+            <p className="text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto">
+              By combining your age, goals, and realistic growth patterns, it generates a structured timeline of your life — including milestones, income progression, and key turning points.
+            </p>
+            <p className="text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto italic">
+              It&apos;s not just prediction — it&apos;s perspective.
+            </p>
+          </section>
+
+          {/* 2. How it works */}
+          <section className="text-center space-y-10">
+            <h2 className="font-serif text-3xl md:text-4xl">How it works</h2>
+            <div className="space-y-8 text-left max-w-xl mx-auto">
+              {[
+                { n: "1", title: "Define your starting point", desc: "Enter your current age and your life goal." },
+                { n: "2", title: "AI simulates your journey", desc: "The system generates a realistic life path based on patterns." },
+                { n: "3", title: "Visualize your future", desc: "Get a timeline with milestones, income growth, and events." },
+              ].map(({ n, title, desc }) => (
+                <div key={n} className="flex gap-6 items-start">
+                  <span className="font-serif text-3xl text-muted-foreground/40 leading-none shrink-0 w-6 text-right">{n}</span>
+                  <div className="space-y-1">
+                    <p className="font-medium text-foreground">{title}</p>
+                    <p className="text-muted-foreground font-light text-sm leading-relaxed">{desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* 3. Features */}
+          <section className="text-center space-y-8">
+            <h2 className="font-serif text-3xl md:text-4xl">What you get</h2>
+            <ul className="space-y-3 max-w-sm mx-auto text-left">
+              {[
+                "15-year life timeline",
+                "Income growth projection",
+                "Key life milestones",
+                "Realistic challenges and setbacks",
+                "Instant results without signup",
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-3 text-muted-foreground font-light">
+                  <span className="text-primary mt-[2px] shrink-0">—</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* 4. Why LifeOS */}
+          <section className="text-center space-y-5">
+            <h2 className="font-serif text-3xl md:text-4xl">Why LifeOS?</h2>
+            <p className="text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto">
+              Most people don&apos;t fail because they lack ability — they fail because they lack direction.
+            </p>
+            <p className="text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto">
+              LifeOS gives you a clear perspective of what your future could look like, helping you make better decisions today.
+            </p>
+            <p className="text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto italic">
+              Your future isn&apos;t fixed — but your direction matters.
+            </p>
+          </section>
+
+          {/* 5. FAQ */}
+          <section className="text-center space-y-10 pb-8">
+            <h2 className="font-serif text-3xl md:text-4xl">Frequently asked questions</h2>
+            <div className="space-y-8 max-w-xl mx-auto text-left">
+              {[
+                {
+                  q: "Is this prediction accurate?",
+                  a: "No, it's a simulation based on patterns, not a guaranteed future.",
+                },
+                {
+                  q: "Do I need to sign up?",
+                  a: "No, you can use LifeOS instantly.",
+                },
+                {
+                  q: "Can I trust the results?",
+                  a: "Use it as guidance, not absolute truth.",
+                },
+              ].map(({ q, a }) => (
+                <div key={q} className="space-y-2">
+                  <p className="font-medium text-foreground">{q}</p>
+                  <p className="text-muted-foreground font-light text-sm leading-relaxed">{a}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+        </div>
 
       </main>
 

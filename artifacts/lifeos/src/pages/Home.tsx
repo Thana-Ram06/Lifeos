@@ -363,6 +363,28 @@ export default function Home() {
         </section>
 
       </main>
+
+      {/* Footer */}
+      <footer className="border-t border-border mt-24">
+        <div className="max-w-3xl mx-auto px-6 md:px-10 py-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+          <span className="text-sm text-gray-600 dark:text-gray-500">
+            &copy; 2026 All rights reserved
+          </span>
+          <span className="text-sm text-gray-600 dark:text-gray-500">
+            Made by{" "}
+            <a
+              href="https://x.com/anoinv?s=21"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="no-underline hover:underline hover:opacity-80 transition-opacity"
+              data-testid="link-made-by"
+            >
+              Thana Ji
+            </a>
+          </span>
+        </div>
+      </footer>
+
     </div>
   );
 }

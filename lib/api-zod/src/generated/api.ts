@@ -14,3 +14,39 @@ import * as zod from "zod";
 export const HealthCheckResponse = zod.object({
   status: zod.string(),
 });
+
+/**
+ * Uses AI to generate a personalized 15-year life simulation
+ * @summary Generate life simulation
+ */
+export const generateSimulationBodyAgeMax = 120;
+
+export const generateSimulationBodyGoalMax = 500;
+
+export const GenerateSimulationBody = zod.object({
+  age: zod.number().min(1).max(generateSimulationBodyAgeMax),
+  goal: zod.string().min(1).max(generateSimulationBodyGoalMax),
+});
+
+export const GenerateSimulationResponse = zod.object({
+  timeline: zod.array(
+    zod.object({
+      year: zod.number(),
+      age: zod.number(),
+      event: zod.string(),
+      income: zod.string(),
+      category: zod.enum([
+        "career",
+        "personal",
+        "financial",
+        "health",
+        "milestone",
+        "challenge",
+      ]),
+    }),
+  ),
+  summary: zod.string(),
+  finalOutcome: zod.string(),
+  keyMilestones: zod.array(zod.string()),
+  challenges: zod.array(zod.string()),
+});

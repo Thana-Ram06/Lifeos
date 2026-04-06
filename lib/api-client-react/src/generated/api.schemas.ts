@@ -8,3 +8,48 @@
 export interface HealthStatus {
   status: string;
 }
+
+export interface GenerateSimulationBody {
+  /**
+   * @minimum 1
+   * @maximum 120
+   */
+  age: number;
+  /**
+   * @minLength 1
+   * @maxLength 500
+   */
+  goal: string;
+}
+
+export type TimelineEntryCategory =
+  (typeof TimelineEntryCategory)[keyof typeof TimelineEntryCategory];
+
+export const TimelineEntryCategory = {
+  career: "career",
+  personal: "personal",
+  financial: "financial",
+  health: "health",
+  milestone: "milestone",
+  challenge: "challenge",
+} as const;
+
+export interface TimelineEntry {
+  year: number;
+  age: number;
+  event: string;
+  income: string;
+  category: TimelineEntryCategory;
+}
+
+export interface SimulationResult {
+  timeline: TimelineEntry[];
+  summary: string;
+  finalOutcome: string;
+  keyMilestones: string[];
+  challenges: string[];
+}
+
+export interface ErrorResponse {
+  error: string;
+}

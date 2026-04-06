@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: generate
+    description: AI life simulation generation
 paths:
   /healthz:
     get:
@@ -24,6 +26,37 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /generate:
+    post:
+      operationId: generateSimulation
+      tags: [generate]
+      summary: Generate life simulation
+      description: Uses AI to generate a personalized 15-year life simulation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateSimulationBody"
+      responses:
+        "200":
+          description: Simulation result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimulationResult"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +66,69 @@ components:
           type: string
       required:
         - status
-
+    GenerateSimulationBody:
+      type: object
+      properties:
+        age:
+          type: integer
+          minimum: 1
+          maximum: 120
+        goal:
+          type: string
+          minLength: 1
+          maxLength: 500
+      required:
+        - age
+        - goal
+    TimelineEntry:
+      type: object
+      properties:
+        year:
+          type: integer
+        age:
+          type: integer
+        event:
+          type: string
+        income:
+          type: string
+        category:
+          type: string
+          enum: [career, personal, financial, health, milestone, challenge]
+      required:
+        - year
+        - age
+        - event
+        - income
+        - category
+    SimulationResult:
+      type: object
+      properties:
+        timeline:
+          type: array
+          items:
+            $ref: "#/components/schemas/TimelineEntry"
+        summary:
+          type: string
+        finalOutcome:
+          type: string
+        keyMilestones:
+          type: array
+          items:
+            type: string
+        challenges:
+          type: array
+          items:
+            type: string
+      required:
+        - timeline
+        - summary
+        - finalOutcome
+        - keyMilestones
+        - challenges
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error

@@ -1,16 +1,15 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGenerateSimulation } from "@workspace/api-client-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Sun, Moon } from "lucide-react";
+import { useTheme } from "@/App";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 export default function Home() {
   const [age, setAge] = useState<string>("");
   const [goal, setGoal] = useState<string>("");
-  
   const resultsRef = useRef<HTMLDivElement>(null);
+  const { theme, toggleTheme } = useTheme();
 
   const generateSimulation = useGenerateSimulation({
     mutation: {
@@ -18,19 +17,14 @@ export default function Home() {
         setTimeout(() => {
           resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
         }, 100);
-      }
-    }
+      },
+    },
   });
 
   const handleGenerate = (e: React.FormEvent) => {
     e.preventDefault();
     if (!age || !goal) return;
-    generateSimulation.mutate({
-      data: {
-        age: parseInt(age, 10),
-        goal: goal
-      }
-    });
+    generateSimulation.mutate({ data: { age: parseInt(age, 10), goal } });
   };
 
   const isPending = generateSimulation.isPending;
@@ -39,13 +33,13 @@ export default function Home() {
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case "career": return "bg-[#3b82f6]";
-      case "personal": return "bg-[#a855f7]";
-      case "financial": return "bg-[#22c55e]";
-      case "health": return "bg-[#ef4444]";
-      case "milestone": return "bg-[#eab308]";
-      case "challenge": return "bg-[#f97316]";
-      default: return "bg-[#888888]";
+      case "career":     return "bg-blue-500";
+      case "personal":   return "bg-purple-500";
+      case "financial":  return "bg-[#22c55e]";
+      case "health":     return "bg-red-500";
+      case "milestone":  return "bg-yellow-500";
+      case "challenge":  return "bg-orange-500";
+      default:           return "bg-[#888888]";
     }
   };
 
@@ -54,90 +48,140 @@ export default function Home() {
     return cleaned ? parseInt(cleaned, 10) : 0;
   };
 
-  const chartData = result?.timeline.map(entry => ({
+  const chartData = result?.timeline.map((entry) => ({
     age: entry.age,
     income: parseIncome(entry.income),
-    rawIncome: entry.income
+    rawIncome: entry.income,
   })) || [];
 
   return (
-    <div className="min-h-[100dvh] w-full flex flex-col items-center bg-background text-foreground font-sans px-6 py-24 selection:bg-primary/30">
-      <div className="w-full max-w-2xl mx-auto flex flex-col items-center">
-        {/* Header / Hero */}
-        <div className="flex flex-col items-center text-center space-y-6 mb-16 w-full">
-          <div className="font-serif text-xl tracking-wide text-primary">LifeOS</div>
-          
-          <h1 className="font-serif text-5xl md:text-7xl font-normal tracking-tight text-white leading-[1.1]">
-            See Your Life<br/>Before It Happens
+    <div className="min-h-[100dvh] w-full bg-background text-foreground font-sans">
+
+      {/* Navbar */}
+      <header className="sticky top-0 z-50 w-full h-16 border-b border-border bg-background/90 backdrop-blur-sm">
+        <div className="max-w-4xl mx-auto px-6 md:px-10 h-full flex items-center justify-between">
+          <span className="font-serif text-xl text-primary tracking-wide" data-testid="navbar-logo">
+            LifeOS
+          </span>
+          <div className="flex items-center gap-6">
+            <a
+              href="#about"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              data-testid="link-about"
+            >
+              About
+            </a>
+            <button
+              onClick={toggleTheme}
+              className="w-9 h-9 flex items-center justify-center rounded-lg border border-border hover:bg-muted transition-colors"
+              aria-label="Toggle theme"
+              data-testid="button-theme-toggle"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={theme}
+                  initial={{ opacity: 0, rotate: -30, scale: 0.7 }}
+                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                  exit={{ opacity: 0, rotate: 30, scale: 0.7 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {theme === "dark" ? (
+                    <Sun size={16} className="text-muted-foreground" />
+                  ) : (
+                    <Moon size={16} className="text-muted-foreground" />
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Main content */}
+      <main className="max-w-3xl mx-auto px-6 md:px-10 pb-32">
+
+        {/* Hero */}
+        <section className="pt-28 pb-16 flex flex-col items-center text-center space-y-6">
+          <h1
+            className="font-serif text-6xl md:text-8xl font-normal tracking-tight leading-[1.05]"
+            data-testid="heading-hero"
+          >
+            See Your Life<br />Before It Happens
           </h1>
-          
-          <p className="text-muted-foreground text-lg md:text-xl font-light tracking-wide max-w-md">
+          <p className="text-muted-foreground text-lg md:text-xl font-light max-w-md leading-relaxed">
             Enter your age and goal. We simulate your future in seconds.
           </p>
-        </div>
+        </section>
 
-        {/* Input Form */}
-        <form onSubmit={handleGenerate} className="w-full space-y-8 flex flex-col items-center">
-          <div className="w-full space-y-6">
-            <div className="space-y-2">
-              <label htmlFor="age" className="text-sm font-medium text-muted-foreground tracking-wide uppercase">Current Age</label>
-              <Input 
-                id="age"
-                type="number" 
-                min="1"
-                max="120"
-                placeholder="e.g. 28" 
-                value={age} 
-                onChange={(e) => setAge(e.target.value)}
-                className="bg-transparent border-border text-2xl py-8 px-4 font-light focus-visible:ring-primary/50 text-center md:text-left transition-colors"
-                required
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <label htmlFor="goal" className="text-sm font-medium text-muted-foreground tracking-wide uppercase">Core Aspiration</label>
-              <Textarea 
-                id="goal"
-                placeholder="What is the one thing you want most in this life?" 
-                value={goal} 
-                onChange={(e) => setGoal(e.target.value)}
-                className="bg-transparent border-border text-lg md:text-xl py-6 px-4 font-light min-h-[140px] resize-none focus-visible:ring-primary/50 transition-colors"
-                required
-              />
-            </div>
+        {/* Input form */}
+        <form onSubmit={handleGenerate} className="space-y-5" data-testid="form-generate">
+          <div className="space-y-2">
+            <label htmlFor="age" className="block text-xs font-medium text-muted-foreground tracking-widest uppercase">
+              Your Age
+            </label>
+            <input
+              id="age"
+              type="number"
+              min="1"
+              max="120"
+              placeholder="e.g. 28"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              required
+              className="w-full bg-transparent border border-border rounded-xl px-4 py-4 text-lg font-light text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+              data-testid="input-age"
+            />
           </div>
 
-          <Button 
-            type="submit" 
+          <div className="space-y-2">
+            <label htmlFor="goal" className="block text-xs font-medium text-muted-foreground tracking-widest uppercase">
+              Your Goal
+            </label>
+            <textarea
+              id="goal"
+              placeholder="What do you want most in this life?"
+              value={goal}
+              onChange={(e) => setGoal(e.target.value)}
+              required
+              rows={4}
+              className="w-full bg-transparent border border-border rounded-xl px-4 py-4 text-lg font-light text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors resize-none"
+              data-testid="input-goal"
+            />
+          </div>
+
+          <button
+            type="submit"
             disabled={isPending || !age || !goal}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium text-lg px-12 py-7 rounded-full transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] w-full md:w-auto mt-4"
+            className="w-full sm:w-auto bg-[#22C55E] hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium text-base px-10 py-4 rounded-xl transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]"
+            data-testid="button-generate"
           >
-            {isPending ? "Simulating..." : "Generate Future"}
-          </Button>
+            {isPending ? "Simulating your life..." : "Generate My Future"}
+          </button>
 
           {error && (
-            <div className="text-destructive text-sm mt-4 p-4 border border-destructive/20 rounded-md bg-destructive/10 w-full text-center">
-              Failed to simulate future. Please try again.
-            </div>
+            <p className="text-sm text-destructive pt-1" data-testid="text-error">
+              Something went wrong. Please try again.
+            </p>
           )}
         </form>
 
-        {/* Loading State */}
+        {/* Loading */}
         <AnimatePresence>
           {isPending && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="mt-24 mb-32 flex flex-col items-center"
+              className="mt-24 flex justify-center"
+              data-testid="loading-state"
             >
-              <motion.div
+              <motion.span
                 animate={{ opacity: [0.3, 1, 0.3] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="font-serif text-2xl text-muted-foreground tracking-wider"
+                className="font-serif text-2xl text-muted-foreground tracking-wide"
               >
                 Simulating your life...
-              </motion.div>
+              </motion.span>
             </motion.div>
           )}
         </AnimatePresence>
@@ -145,102 +189,130 @@ export default function Home() {
         {/* Results */}
         <AnimatePresence>
           {result && !isPending && (
-            <motion.div 
+            <motion.div
               ref={resultsRef}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full mt-32 space-y-24 pb-24"
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-24 space-y-20"
+              data-testid="results-section"
             >
-              <div className="space-y-6">
-                <h2 className="font-serif text-4xl border-b border-border pb-6">Executive Summary</h2>
-                <p className="text-lg text-muted-foreground leading-relaxed font-light">{result.summary}</p>
-              </div>
+              {/* Summary */}
+              <section className="space-y-4">
+                <h2 className="font-serif text-3xl md:text-4xl border-b border-border pb-5" data-testid="heading-summary">
+                  Summary
+                </h2>
+                <p className="text-muted-foreground text-lg font-light leading-relaxed">
+                  {result.summary}
+                </p>
+              </section>
 
-              <div className="space-y-6">
-                <h2 className="font-serif text-4xl border-b border-border pb-6">Income Progression</h2>
-                <div className="h-[300px] w-full mt-8">
+              {/* Income chart */}
+              <section className="space-y-6">
+                <h2 className="font-serif text-3xl md:text-4xl border-b border-border pb-5">
+                  Income Progression
+                </h2>
+                <div className="h-[260px] w-full">
                   <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={chartData} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#1A1A1A" vertical={false} />
-                      <XAxis 
-                        dataKey="age" 
-                        stroke="#888888" 
-                        fontSize={12} 
+                    <LineChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
+                      <XAxis
+                        dataKey="age"
+                        stroke="hsl(var(--muted-foreground))"
+                        fontSize={11}
                         tickLine={false}
                         axisLine={false}
-                        tickFormatter={(value) => `Age ${value}`}
+                        tickFormatter={(v) => `Age ${v}`}
                       />
-                      <YAxis 
-                        stroke="#888888" 
-                        fontSize={12} 
+                      <YAxis
+                        stroke="hsl(var(--muted-foreground))"
+                        fontSize={11}
                         tickLine={false}
                         axisLine={false}
-                        tickFormatter={(value) => `$${(value / 1000)}k`}
+                        tickFormatter={(v) => `$${v / 1000}k`}
                       />
-                      <Tooltip 
-                        contentStyle={{ backgroundColor: '#0A0A0A', borderColor: '#1A1A1A', color: '#FFFFFF' }}
-                        itemStyle={{ color: '#22C55E' }}
-                        formatter={(value: number, name: string, props: any) => [props.payload.rawIncome, 'Income']}
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: "hsl(var(--card))",
+                          borderColor: "hsl(var(--border))",
+                          color: "hsl(var(--foreground))",
+                          borderRadius: "12px",
+                          fontSize: "13px",
+                        }}
+                        itemStyle={{ color: "#22C55E" }}
+                        formatter={(_value: number, _name: string, props: { payload?: { rawIncome: string } }) => [props.payload?.rawIncome ?? "", "Income"]}
                         labelFormatter={(label) => `Age ${label}`}
                       />
-                      <Line 
-                        type="monotone" 
-                        dataKey="income" 
-                        stroke="#22C55E" 
+                      <Line
+                        type="monotone"
+                        dataKey="income"
+                        stroke="#22C55E"
                         strokeWidth={2}
-                        dot={{ r: 4, fill: '#0A0A0A', stroke: '#22C55E', strokeWidth: 2 }}
-                        activeDot={{ r: 6, fill: '#22C55E', stroke: '#0A0A0A' }}
+                        dot={{ r: 3, fill: "hsl(var(--background))", stroke: "#22C55E", strokeWidth: 2 }}
+                        activeDot={{ r: 5, fill: "#22C55E" }}
                       />
                     </LineChart>
                   </ResponsiveContainer>
                 </div>
-              </div>
+              </section>
 
-              <div className="space-y-12">
-                <h2 className="font-serif text-4xl border-b border-border pb-6">Timeline</h2>
-                <div className="relative pl-4 md:pl-0">
-                  <div className="absolute left-[27px] md:left-[110px] top-4 bottom-4 w-px bg-border z-0"></div>
-                  
-                  <div className="space-y-12 relative z-10">
+              {/* Timeline */}
+              <section className="space-y-10">
+                <h2 className="font-serif text-3xl md:text-4xl border-b border-border pb-5">
+                  Timeline
+                </h2>
+                <div className="relative">
+                  {/* Vertical line */}
+                  <div className="absolute left-[6px] top-2 bottom-2 w-px bg-border" />
+                  <div className="space-y-10 pl-8">
                     {result.timeline.map((entry, index) => (
-                      <motion.div 
+                      <motion.div
                         key={index}
-                        initial={{ opacity: 0, x: -10 }}
+                        initial={{ opacity: 0, x: -8 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        transition={{ duration: 0.6, delay: index * 0.1 }}
-                        className="flex flex-col md:flex-row gap-6 md:gap-12"
+                        viewport={{ once: true, margin: "-80px" }}
+                        transition={{ duration: 0.4, delay: index * 0.04 }}
+                        className="relative"
+                        data-testid={`timeline-entry-${index}`}
                       >
-                        <div className="flex items-center md:items-start md:w-[80px] shrink-0 pt-1">
-                          <div className="font-mono text-sm text-muted-foreground tracking-tighter w-12 text-right">{entry.year}</div>
-                          <div className={`w-3 h-3 rounded-full mx-4 md:ml-4 md:mr-0 shrink-0 ${getCategoryColor(entry.category)} ring-4 ring-background shadow-none`}></div>
-                        </div>
-                        <div className="flex-1 space-y-2 bg-transparent border border-border p-6 rounded-2xl ml-12 md:ml-0 hover:border-primary/50 transition-colors">
-                          <div className="flex justify-between items-baseline mb-2">
-                            <span className="text-xs uppercase tracking-widest text-muted-foreground font-medium">Age {entry.age}</span>
-                            <span className="font-mono text-xs text-primary/80">{entry.income}</span>
+                        {/* Dot */}
+                        <div className={`absolute -left-8 top-[6px] w-3 h-3 rounded-full ${getCategoryColor(entry.category)} ring-4 ring-background`} />
+
+                        <div className="border border-border rounded-xl p-5 hover:border-primary/40 transition-colors">
+                          <div className="flex justify-between items-baseline mb-3">
+                            <span className="text-xs uppercase tracking-widest text-muted-foreground font-medium">
+                              {entry.year} &middot; Age {entry.age}
+                            </span>
+                            <span className="font-mono text-xs text-primary/80 font-medium">
+                              {entry.income}
+                            </span>
                           </div>
-                          <p className="text-foreground text-lg font-light leading-relaxed">{entry.event}</p>
+                          <p className="text-foreground font-light leading-relaxed">
+                            {entry.event}
+                          </p>
                         </div>
                       </motion.div>
                     ))}
                   </div>
                 </div>
-              </div>
+              </section>
 
-              <div className="grid md:grid-cols-2 gap-12 pt-12">
-                <div className="space-y-6">
-                  <h3 className="font-serif text-3xl pb-4 border-b border-border">Key Milestones</h3>
-                  <div className="space-y-4">
+              {/* Milestones & Challenges */}
+              <section className="grid md:grid-cols-2 gap-12">
+                <div className="space-y-5">
+                  <h3 className="font-serif text-2xl md:text-3xl border-b border-border pb-4">
+                    Milestones
+                  </h3>
+                  <div className="space-y-3">
                     {result.keyMilestones.map((milestone, idx) => (
-                      <motion.div 
+                      <motion.div
                         key={idx}
-                        initial={{ opacity: 0, y: 10 }}
+                        initial={{ opacity: 0, y: 8 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ delay: idx * 0.1 }}
-                        className="p-5 border border-border rounded-xl text-muted-foreground font-light bg-transparent shadow-none"
+                        transition={{ duration: 0.35, delay: idx * 0.08 }}
+                        className="border border-border rounded-xl p-4 text-muted-foreground font-light text-sm leading-relaxed"
+                        data-testid={`card-milestone-${idx}`}
                       >
                         {milestone}
                       </motion.div>
@@ -248,34 +320,49 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="space-y-6">
-                  <h3 className="font-serif text-3xl pb-4 border-b border-border">Anticipated Challenges</h3>
-                  <div className="space-y-4">
+                <div className="space-y-5">
+                  <h3 className="font-serif text-2xl md:text-3xl border-b border-border pb-4">
+                    Challenges
+                  </h3>
+                  <div className="space-y-3">
                     {result.challenges.map((challenge, idx) => (
-                      <motion.div 
+                      <motion.div
                         key={idx}
-                        initial={{ opacity: 0, y: 10 }}
+                        initial={{ opacity: 0, y: 8 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ delay: idx * 0.1 }}
-                        className="p-5 border border-border rounded-xl text-muted-foreground font-light bg-transparent shadow-none"
+                        transition={{ duration: 0.35, delay: idx * 0.08 }}
+                        className="border border-border rounded-xl p-4 text-muted-foreground font-light text-sm leading-relaxed"
+                        data-testid={`card-challenge-${idx}`}
                       >
                         {challenge}
                       </motion.div>
                     ))}
                   </div>
                 </div>
-              </div>
+              </section>
 
-              <div className="pt-16 border-t border-border">
-                <h2 className="font-serif text-4xl mb-6">Final Outcome</h2>
-                <p className="text-xl text-foreground leading-relaxed font-light italic opacity-90">{result.finalOutcome}</p>
-              </div>
-
+              {/* Final outcome */}
+              <section className="border-t border-border pt-12 pb-8">
+                <h2 className="font-serif text-3xl md:text-4xl mb-5">Final Outcome</h2>
+                <p className="text-xl font-light italic text-muted-foreground leading-relaxed" data-testid="text-final-outcome">
+                  {result.finalOutcome}
+                </p>
+              </section>
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+
+        {/* About anchor */}
+        <section id="about" className="mt-32 pt-16 border-t border-border">
+          <h3 className="font-serif text-2xl mb-3">About LifeOS</h3>
+          <p className="text-muted-foreground font-light text-sm leading-relaxed max-w-xl">
+            LifeOS uses AI to generate a personalized 15-year life simulation based on your age and goals. 
+            It is a thought experiment — a mirror that shows one possible version of your future to help you think clearly about the present.
+          </p>
+        </section>
+
+      </main>
     </div>
   );
 }

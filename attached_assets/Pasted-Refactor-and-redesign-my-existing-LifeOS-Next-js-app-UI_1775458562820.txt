@@ -1,0 +1,176 @@
+Refactor and redesign my existing LifeOS Next.js app UI to match a premium minimal SaaS style inspired by tpot.cc.
+
+IMPORTANT: Do NOT rebuild from scratch. Improve the existing code.
+
+---
+
+🎯 GOAL
+
+Make the UI feel:
+- Extremely clean
+- Typography-focused
+- Premium and minimal
+- Similar to tpot.cc (centered, spacious, elegant)
+
+---
+
+🧭 ADD TOP NAVBAR
+
+Create a minimal top navigation bar:
+
+Left:
+- Logo (text): LifeOS (use Instrument Serif)
+
+Right:
+- Theme toggle (light/dark)
+- Optional small “About” link
+
+Navbar style:
+- Sticky top
+- Transparent or very subtle background
+- Border-bottom: 1px solid (#1A1A1A in dark mode)
+- Height: ~64px
+- Padding: px-6 md:px-10
+
+---
+
+🌗 ADD THEME TOGGLE (IMPORTANT)
+
+Implement dark/light mode toggle:
+
+- Default: dark mode
+- Use Tailwind class strategy or next-themes
+- Smooth transition
+
+Dark:
+- bg: #0A0A0A
+- text: white
+
+Light:
+- bg: white
+- text: black
+
+Toggle style:
+- Minimal icon button (sun/moon)
+- No heavy UI
+
+---
+
+🔤 IMPROVE TYPOGRAPHY (CRITICAL)
+
+Hero heading:
+- Font: Instrument Serif
+- Size: very large (text-6xl md:text-8xl)
+- Line height: tight
+- Letter spacing: normal
+
+Body:
+- Font: Inter
+- text-gray-400 (dark mode)
+
+Reduce ALL unnecessary text.
+
+---
+
+📐 FIX LAYOUT (MOST IMPORTANT)
+
+Everything must be CENTERED and SPACED.
+
+Main container:
+- max-w-3xl or max-w-4xl
+- mx-auto
+- px-6
+
+Spacing:
+- Hero top margin: mt-24+
+- Section gaps: space-y-10 or more
+
+---
+
+🧱 INPUT SECTION (REFINE)
+
+- Stack inputs vertically
+- Add proper spacing
+- Inputs:
+  - Rounded-xl
+  - Border only (no shadow)
+  - bg-transparent
+  - focus:ring-0
+
+Button:
+- Green (#22C55E)
+- Rounded-xl
+- font-medium
+- hover: slight brightness
+
+---
+
+📊 RESULT SECTION (MAKE IT PREMIUM)
+
+Timeline:
+- Vertical layout
+- Each item:
+  - Year (bold)
+  - Event (muted text)
+- Add subtle divider line
+
+Cards:
+- Border only
+- Rounded-xl
+- p-4 or p-6
+- No shadow
+
+---
+
+✨ ADD ANIMATIONS
+
+Use Framer Motion:
+- Fade + slight upward motion
+- Duration: 0.4s
+- Smooth and subtle
+
+---
+
+🚫 REMOVE
+
+- Any heavy shadows
+- Unnecessary colors
+- Cluttered UI elements
+- Large icons
+
+---
+
+🎨 COLOR SYSTEM
+
+Use ONLY:
+
+Dark:
+- bg: #0A0A0A
+- text: #FFFFFF
+- secondary: #888888
+- border: #1A1A1A
+
+Light:
+- bg: #FFFFFF
+- text: #000000
+- border: #E5E5E5
+
+---
+
+📱 RESPONSIVENESS
+
+- Mobile-first
+- Ensure proper spacing on small screens
+- Keep everything centered
+
+---
+
+⚡ FINAL RESULT
+
+The app should feel:
+- Like a premium product landing page
+- Minimal but powerful
+- Focused on typography and spacing
+- Similar visual quality to tpot.cc
+
+Do not overdesign. Keep it simple and elegant.

@@ -4,9 +4,52 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
-import { useEffect } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
 
 const queryClient = new QueryClient();
+
+type Theme = "dark" | "light";
+
+interface ThemeContextValue {
+  theme: Theme;
+  toggleTheme: () => void;
+}
+
+export const ThemeContext = createContext<ThemeContextValue>({
+  theme: "dark",
+  toggleTheme: () => {},
+});
+
+export function useTheme() {
+  return useContext(ThemeContext);
+}
+
+function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const [theme, setTheme] = useState<Theme>(() => {
+    const stored = localStorage.getItem("lifeos-theme") as Theme | null;
+    return stored ?? "dark";
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+    localStorage.setItem("lifeos-theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
 
 function Router() {
   return (
@@ -15,15 +58,6 @@ function Router() {
       <Route component={NotFound} />
     </Switch>
   );
-}
-
-function ThemeProvider({ children }: { children: React.ReactNode }) {
-  useEffect(() => {
-    // Force dark mode
-    document.documentElement.classList.add("dark");
-  }, []);
-  
-  return <>{children}</>;
 }
 
 function App() {

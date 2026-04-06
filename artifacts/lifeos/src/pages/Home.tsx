@@ -101,69 +101,76 @@ export default function Home() {
       <main className="max-w-3xl mx-auto px-6 md:px-10 pb-32">
 
         {/* Hero */}
-        <section className="pt-28 pb-16 flex flex-col items-center text-center space-y-6">
+        <section className="pt-32 pb-14 flex flex-col items-center text-center space-y-6">
+          {/* Badge */}
+          <span className="inline-flex items-center gap-2 text-xs font-medium text-muted-foreground border border-border rounded-full px-3 py-1 tracking-widest uppercase">
+            AI Life Simulator
+          </span>
+
           <h1
-            className="font-serif text-6xl md:text-8xl font-normal tracking-tight leading-[1.05]"
+            className="font-serif text-6xl md:text-7xl font-normal tracking-tight leading-[1.05]"
             data-testid="heading-hero"
           >
             See Your Life<br />Before It Happens
           </h1>
-          <p className="text-muted-foreground text-lg md:text-xl font-light max-w-md leading-relaxed">
+          <p className="text-muted-foreground text-lg font-light max-w-md leading-relaxed">
             Enter your age and goal. We simulate your future in seconds.
           </p>
         </section>
 
-        {/* Input form */}
-        <form onSubmit={handleGenerate} className="space-y-5" data-testid="form-generate">
-          <div className="space-y-2">
-            <label htmlFor="age" className="block text-xs font-medium text-muted-foreground tracking-widest uppercase">
-              Your Age
-            </label>
-            <input
-              id="age"
-              type="number"
-              min="1"
-              max="120"
-              placeholder="e.g. 28"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
-              required
-              className="w-full bg-transparent border border-border rounded-xl px-4 py-4 text-lg font-light text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
-              data-testid="input-age"
-            />
-          </div>
+        {/* Input form — card wrapper */}
+        <div className="rounded-2xl border border-border bg-[#111111] dark:bg-[#111111] p-6">
+          <form onSubmit={handleGenerate} className="space-y-5" data-testid="form-generate">
+            <div className="space-y-2">
+              <label htmlFor="age" className="block text-xs font-medium text-muted-foreground tracking-widest uppercase">
+                Your Age
+              </label>
+              <input
+                id="age"
+                type="number"
+                min="1"
+                max="120"
+                placeholder="e.g. 28"
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+                required
+                className="w-full bg-transparent border border-border rounded-xl px-4 py-4 text-lg font-light text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                data-testid="input-age"
+              />
+            </div>
 
-          <div className="space-y-2">
-            <label htmlFor="goal" className="block text-xs font-medium text-muted-foreground tracking-widest uppercase">
-              Your Goal
-            </label>
-            <textarea
-              id="goal"
-              placeholder="What do you want most in this life?"
-              value={goal}
-              onChange={(e) => setGoal(e.target.value)}
-              required
-              rows={4}
-              className="w-full bg-transparent border border-border rounded-xl px-4 py-4 text-lg font-light text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors resize-none"
-              data-testid="input-goal"
-            />
-          </div>
+            <div className="space-y-2">
+              <label htmlFor="goal" className="block text-xs font-medium text-muted-foreground tracking-widest uppercase">
+                Your Goal
+              </label>
+              <textarea
+                id="goal"
+                placeholder="What do you want most in this life?"
+                value={goal}
+                onChange={(e) => setGoal(e.target.value)}
+                required
+                rows={4}
+                className="w-full bg-transparent border border-border rounded-xl px-4 py-4 text-lg font-light text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors resize-none"
+                data-testid="input-goal"
+              />
+            </div>
 
-          <button
-            type="submit"
-            disabled={isPending || !age || !goal}
-            className="w-full sm:w-auto bg-[#22C55E] hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium text-base px-10 py-4 rounded-xl transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]"
-            data-testid="button-generate"
-          >
-            {isPending ? "Simulating your life..." : "Generate My Future"}
-          </button>
+            <button
+              type="submit"
+              disabled={isPending || !age || !goal}
+              className="w-full sm:w-auto bg-[#22C55E] hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium text-base px-10 py-4 rounded-xl transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]"
+              data-testid="button-generate"
+            >
+              {isPending ? "Simulating your life..." : "Generate My Future"}
+            </button>
 
-          {error && (
-            <p className="text-sm text-destructive pt-1" data-testid="text-error">
-              Something went wrong. Please try again.
-            </p>
-          )}
-        </form>
+            {error && (
+              <p className="text-sm text-destructive pt-1" data-testid="text-error">
+                Something went wrong. Please try again.
+              </p>
+            )}
+          </form>
+        </div>
 
         {/* Loading */}
         <AnimatePresence>
@@ -194,25 +201,21 @@ export default function Home() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-24 space-y-20"
+              className="mt-24 space-y-8"
               data-testid="results-section"
             >
-              {/* Summary */}
-              <section className="space-y-4">
-                <h2 className="font-serif text-3xl md:text-4xl border-b border-border pb-5" data-testid="heading-summary">
-                  Summary
-                </h2>
-                <p className="text-muted-foreground text-lg font-light leading-relaxed">
+              {/* Summary card */}
+              <div className="rounded-xl border border-border p-6 space-y-3">
+                <h2 className="font-serif text-2xl md:text-3xl" data-testid="heading-summary">Summary</h2>
+                <p className="text-muted-foreground font-light leading-relaxed">
                   {result.summary}
                 </p>
-              </section>
+              </div>
 
-              {/* Income chart */}
-              <section className="space-y-6">
-                <h2 className="font-serif text-3xl md:text-4xl border-b border-border pb-5">
-                  Income Progression
-                </h2>
-                <div className="h-[260px] w-full">
+              {/* Income chart card */}
+              <div className="rounded-xl border border-border p-6 space-y-5">
+                <h2 className="font-serif text-2xl md:text-3xl">Income Progression</h2>
+                <div className="h-[240px] w-full">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                       <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
@@ -254,17 +257,14 @@ export default function Home() {
                     </LineChart>
                   </ResponsiveContainer>
                 </div>
-              </section>
+              </div>
 
-              {/* Timeline */}
-              <section className="space-y-10">
-                <h2 className="font-serif text-3xl md:text-4xl border-b border-border pb-5">
-                  Timeline
-                </h2>
+              {/* Timeline card */}
+              <div className="rounded-xl border border-border p-6 space-y-8">
+                <h2 className="font-serif text-2xl md:text-3xl">Timeline</h2>
                 <div className="relative">
-                  {/* Vertical line */}
                   <div className="absolute left-[6px] top-2 bottom-2 w-px bg-border" />
-                  <div className="space-y-10 pl-8">
+                  <div className="space-y-8 pl-8">
                     {result.timeline.map((entry, index) => (
                       <motion.div
                         key={index}
@@ -275,11 +275,9 @@ export default function Home() {
                         className="relative"
                         data-testid={`timeline-entry-${index}`}
                       >
-                        {/* Dot */}
                         <div className={`absolute -left-8 top-[6px] w-3 h-3 rounded-full ${getCategoryColor(entry.category)} ring-4 ring-background`} />
-
-                        <div className="border border-border rounded-xl p-5 hover:border-primary/40 transition-colors">
-                          <div className="flex justify-between items-baseline mb-3">
+                        <div className="border border-border rounded-xl p-4 hover:border-primary/40 transition-colors">
+                          <div className="flex justify-between items-baseline mb-2">
                             <span className="text-xs uppercase tracking-widest text-muted-foreground font-medium">
                               {entry.year} &middot; Age {entry.age}
                             </span>
@@ -287,7 +285,7 @@ export default function Home() {
                               {entry.income}
                             </span>
                           </div>
-                          <p className="text-foreground font-light leading-relaxed">
+                          <p className="text-foreground font-light leading-relaxed text-sm">
                             {entry.event}
                           </p>
                         </div>
@@ -295,14 +293,12 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-              </section>
+              </div>
 
-              {/* Milestones & Challenges */}
-              <section className="grid md:grid-cols-2 gap-12">
-                <div className="space-y-5">
-                  <h3 className="font-serif text-2xl md:text-3xl border-b border-border pb-4">
-                    Milestones
-                  </h3>
+              {/* Milestones & Challenges grid */}
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="rounded-xl border border-border p-6 space-y-4">
+                  <h3 className="font-serif text-xl md:text-2xl">Milestones</h3>
                   <div className="space-y-3">
                     {result.keyMilestones.map((milestone, idx) => (
                       <motion.div
@@ -311,19 +307,18 @@ export default function Home() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.35, delay: idx * 0.08 }}
-                        className="border border-border rounded-xl p-4 text-muted-foreground font-light text-sm leading-relaxed"
+                        className="flex items-start gap-3 text-muted-foreground font-light text-sm leading-relaxed"
                         data-testid={`card-milestone-${idx}`}
                       >
-                        {milestone}
+                        <span className="text-primary shrink-0 mt-[2px]">—</span>
+                        <span>{milestone}</span>
                       </motion.div>
                     ))}
                   </div>
                 </div>
 
-                <div className="space-y-5">
-                  <h3 className="font-serif text-2xl md:text-3xl border-b border-border pb-4">
-                    Challenges
-                  </h3>
+                <div className="rounded-xl border border-border p-6 space-y-4">
+                  <h3 className="font-serif text-xl md:text-2xl">Challenges</h3>
                   <div className="space-y-3">
                     {result.challenges.map((challenge, idx) => (
                       <motion.div
@@ -332,32 +327,34 @@ export default function Home() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.35, delay: idx * 0.08 }}
-                        className="border border-border rounded-xl p-4 text-muted-foreground font-light text-sm leading-relaxed"
+                        className="flex items-start gap-3 text-muted-foreground font-light text-sm leading-relaxed"
                         data-testid={`card-challenge-${idx}`}
                       >
-                        {challenge}
+                        <span className="text-primary shrink-0 mt-[2px]">—</span>
+                        <span>{challenge}</span>
                       </motion.div>
                     ))}
                   </div>
                 </div>
-              </section>
+              </div>
 
-              {/* Final outcome */}
-              <section className="border-t border-border pt-12 pb-8">
-                <h2 className="font-serif text-3xl md:text-4xl mb-5">Final Outcome</h2>
-                <p className="text-xl font-light italic text-muted-foreground leading-relaxed" data-testid="text-final-outcome">
+              {/* Final outcome card */}
+              <div className="rounded-xl border border-primary/20 bg-primary/5 p-6 space-y-3">
+                <h2 className="font-serif text-2xl md:text-3xl">Final Outcome</h2>
+                <p className="text-lg font-light italic text-muted-foreground leading-relaxed" data-testid="text-final-outcome">
                   {result.finalOutcome}
                 </p>
-              </section>
+              </div>
+
             </motion.div>
           )}
         </AnimatePresence>
 
         {/* ── Landing sections ── */}
-        <div id="about" className="mt-24 space-y-24">
+        <div id="about" className="mt-24 space-y-16">
 
           {/* 1. What is LifeOS */}
-          <section className="text-center space-y-5 border-t border-border pt-20">
+          <div className="space-y-5 text-center pt-8 border-t border-border">
             <h2 className="font-serif text-3xl md:text-4xl">What is LifeOS?</h2>
             <p className="text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto">
               LifeOS is an AI-powered life simulation system that helps you visualize your future based on your current direction.
@@ -368,49 +365,57 @@ export default function Home() {
             <p className="text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto italic">
               It&apos;s not just prediction — it&apos;s perspective.
             </p>
-          </section>
+          </div>
+
+          {/* Divider */}
+          <div className="border-t border-border" />
 
           {/* 2. How it works */}
-          <section className="text-center space-y-10">
-            <h2 className="font-serif text-3xl md:text-4xl">How it works</h2>
-            <div className="space-y-8 text-left max-w-xl mx-auto">
+          <section className="space-y-10">
+            <h2 className="font-serif text-3xl md:text-4xl text-center">How it works</h2>
+            <div className="grid md:grid-cols-3 gap-4">
               {[
-                { n: "1", title: "Define your starting point", desc: "Enter your current age and your life goal." },
-                { n: "2", title: "AI simulates your journey", desc: "The system generates a realistic life path based on patterns." },
-                { n: "3", title: "Visualize your future", desc: "Get a timeline with milestones, income growth, and events." },
+                { n: "01", title: "Define your starting point", desc: "Enter your current age and your life goal." },
+                { n: "02", title: "AI simulates your journey", desc: "The system generates a realistic life path based on patterns." },
+                { n: "03", title: "Visualize your future", desc: "Get a timeline with milestones, income growth, and events." },
               ].map(({ n, title, desc }) => (
-                <div key={n} className="flex gap-6 items-start">
-                  <span className="font-serif text-3xl text-muted-foreground/40 leading-none shrink-0 w-6 text-right">{n}</span>
-                  <div className="space-y-1">
-                    <p className="font-medium text-foreground">{title}</p>
-                    <p className="text-muted-foreground font-light text-sm leading-relaxed">{desc}</p>
-                  </div>
+                <div key={n} className="rounded-xl border border-border p-6 space-y-3">
+                  <span className="font-serif text-3xl text-primary/30 leading-none block">{n}</span>
+                  <p className="font-medium text-foreground text-sm">{title}</p>
+                  <p className="text-muted-foreground font-light text-sm leading-relaxed">{desc}</p>
                 </div>
               ))}
             </div>
           </section>
 
+          {/* Divider */}
+          <div className="border-t border-border" />
+
           {/* 3. Features */}
-          <section className="text-center space-y-8">
-            <h2 className="font-serif text-3xl md:text-4xl">What you get</h2>
-            <ul className="space-y-3 max-w-sm mx-auto text-left">
+          <section className="space-y-8">
+            <h2 className="font-serif text-3xl md:text-4xl text-center">What you get</h2>
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
               {[
-                "15-year life timeline",
-                "Income growth projection",
-                "Key life milestones",
-                "Realistic challenges and setbacks",
-                "Instant results without signup",
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-3 text-muted-foreground font-light">
-                  <span className="text-primary mt-[2px] shrink-0">—</span>
-                  <span>{item}</span>
-                </li>
+                { label: "15-year timeline", sub: "A full decade and a half of your simulated life path." },
+                { label: "Income projection", sub: "Watch your earning power grow year by year." },
+                { label: "Key milestones", sub: "Career, relationships, and personal breakthroughs." },
+                { label: "Real challenges", sub: "Honest setbacks and obstacles you may face." },
+                { label: "No signup needed", sub: "Generate your future instantly, for free." },
+                { label: "AI-powered", sub: "Powered by state-of-the-art language models." },
+              ].map(({ label, sub }) => (
+                <div key={label} className="rounded-xl border border-border p-5 space-y-1">
+                  <p className="font-medium text-foreground text-sm">{label}</p>
+                  <p className="text-muted-foreground font-light text-xs leading-relaxed">{sub}</p>
+                </div>
               ))}
-            </ul>
+            </div>
           </section>
 
+          {/* Divider */}
+          <div className="border-t border-border" />
+
           {/* 4. Why LifeOS */}
-          <section className="text-center space-y-5">
+          <section className="rounded-xl border border-border p-8 space-y-5 text-center">
             <h2 className="font-serif text-3xl md:text-4xl">Why LifeOS?</h2>
             <p className="text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto">
               Most people don&apos;t fail because they lack ability — they fail because they lack direction.
@@ -423,10 +428,13 @@ export default function Home() {
             </p>
           </section>
 
+          {/* Divider */}
+          <div className="border-t border-border" />
+
           {/* 5. FAQ */}
-          <section className="text-center space-y-10 pb-8">
-            <h2 className="font-serif text-3xl md:text-4xl">Frequently asked questions</h2>
-            <div className="space-y-8 max-w-xl mx-auto text-left">
+          <section className="space-y-8 pb-8">
+            <h2 className="font-serif text-3xl md:text-4xl text-center">Frequently asked questions</h2>
+            <div className="space-y-4">
               {[
                 {
                   q: "Is this prediction accurate?",
@@ -441,8 +449,8 @@ export default function Home() {
                   a: "Use it as guidance, not absolute truth.",
                 },
               ].map(({ q, a }) => (
-                <div key={q} className="space-y-2">
-                  <p className="font-medium text-foreground">{q}</p>
+                <div key={q} className="rounded-xl border border-border p-5 space-y-2">
+                  <p className="font-medium text-foreground text-sm">{q}</p>
                   <p className="text-muted-foreground font-light text-sm leading-relaxed">{a}</p>
                 </div>
               ))}

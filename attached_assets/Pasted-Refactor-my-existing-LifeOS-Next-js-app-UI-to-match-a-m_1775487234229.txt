@@ -1,0 +1,157 @@
+Refactor my existing LifeOS Next.js app UI to match a modern premium SaaS design similar to rytcode.xyz.
+
+IMPORTANT:
+- Do NOT rebuild from scratch
+- Improve layout, spacing, and structure
+- Keep it clean but more structured than before
+
+---
+
+🎯 GOAL
+
+Make the UI:
+- Modern and premium
+- Slightly more visual (not too empty)
+- Structured with sections
+- Still minimal but not plain
+
+---
+
+🧭 NAVBAR (IMPROVE)
+
+- Left: LifeOS logo (Instrument Serif)
+- Right:
+  - Theme toggle
+  - Minimal link (optional)
+
+Style:
+- Sticky top
+- Subtle border-bottom
+- Slight backdrop blur (optional)
+
+---
+
+🎯 HERO SECTION (UPGRADE)
+
+Make hero more powerful:
+
+Heading:
+- Very large (text-6xl md:text-7xl)
+- Instrument Serif
+
+Subtext:
+- Short and clean
+
+Add:
+- Small badge above heading:
+  "AI Life Simulator"
+
+CTA:
+- Input + button centered
+
+Spacing:
+- More breathing space (mt-32)
+
+---
+
+🧱 INPUT SECTION (CARD STYLE)
+
+Wrap inputs inside a container:
+
+- Rounded-2xl
+- Border only
+- Slight background contrast (dark: #111)
+
+Structure:
+- Age input
+- Goal input
+- Generate button
+
+Padding: p-6
+
+---
+
+📊 RESULT SECTION (UPGRADE BIG TIME)
+
+Make results look like a product:
+
+Split into blocks:
+
+1. Timeline (main)
+2. Income (small card)
+3. Events (cards)
+
+Style:
+- Use grid layout (md:grid-cols-2)
+- Cards:
+  - Rounded-xl
+  - Border
+  - Padding p-4
+  - No shadow
+
+---
+
+📦 CONTENT SECTIONS (STRUCTURED)
+
+Instead of plain text, use blocks:
+
+Each section:
+- Title
+- Small paragraph
+- Optional divider
+
+Spacing:
+- space-y-16
+
+Add subtle divider:
+border-t border-neutral-800
+
+---
+
+🎨 DESIGN SYSTEM
+
+Dark mode:
+- bg: #0A0A0A
+- cards: #111111
+- border: #1A1A1A
+
+Text:
+- primary: white
+- secondary: #A1A1AA
+
+---
+
+✨ ADD VISUAL DEPTH (IMPORTANT)
+
+- Use containers (not just plain text)
+- Add section separation
+- Keep everything aligned
+
+---
+
+📱 RESPONSIVE
+
+- Stack cards on mobile
+- Maintain spacing
+- Keep centered layout
+
+---
+
+🚫 REMOVE
+
+- Flat empty sections
+- Too much plain text
+- Unstructured layout
+
+---
+
+⚡ FINAL RESULT
+
+The app should feel:
+- Like a real SaaS product
+- Clean but not empty
+- Similar to rytcode.xyz style
+- Premium and modern
+
+Do NOT overdesign.
+Balance minimal + structure.

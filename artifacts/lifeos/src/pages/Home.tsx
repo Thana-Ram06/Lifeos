@@ -379,7 +379,7 @@ export default function Home() {
               className="no-underline hover:underline hover:opacity-80 transition-opacity"
               data-testid="link-made-by"
             >
-              Thana Ji
+              me
             </a>
           </span>
         </div>

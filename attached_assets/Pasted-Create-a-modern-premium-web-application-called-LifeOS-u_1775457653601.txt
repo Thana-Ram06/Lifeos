@@ -1,0 +1,161 @@
+Create a modern, premium web application called LifeOS using Next.js 16 (App Router), TypeScript, and Tailwind CSS.
+
+The app is an AI-powered life simulator where users input their age and goal, and the system generates a simulated future timeline.
+
+---
+
+🎯 DESIGN STYLE (VERY IMPORTANT)
+
+Follow a minimal, premium SaaS UI style inspired by tpot.cc:
+- Clean, centered layout
+- Very large serif hero heading
+- Lots of whitespace
+- No heavy shadows
+- Soft borders only
+- Smooth subtle animations
+
+Fonts:
+- Headings: Instrument Serif
+- Body: Inter
+
+Dark theme default:
+- Background: #0A0A0A
+- Text: #FFFFFF
+- Secondary text: #888888
+- Borders: #1A1A1A
+- Accent button: green (#22C55E)
+
+---
+
+📄 PAGE STRUCTURE
+
+Single-page layout:
+
+1. HERO SECTION (centered)
+- Logo text: LifeOS
+- Large heading: “See Your Life Before It Happens”
+- Subtext: “Enter your age and goal. We simulate your future in seconds.”
+- Input fields:
+  - Age (number input)
+  - Goal (text input)
+- Generate button (green)
+
+2. LOADING STATE
+- When user clicks generate:
+  Show text: “Simulating your life…”
+
+3. RESULT SECTION (appears below with animation)
+
+Include:
+- Timeline (vertical list of years and events)
+- Income progression (simple increasing values in text or basic chart)
+- Life events (cards with rounded borders)
+
+---
+
+⚙️ FUNCTIONALITY
+
+- No authentication
+- No database
+- Everything runs in real-time
+
+When user submits:
+- Call API route: /api/generate
+- Send age and goal
+- Display response
+
+---
+
+🧠 AI INTEGRATION (Groq API)
+
+Create API route:
+app/api/generate/route.ts
+
+Use fetch to call Groq API:
+https://api.groq.com/openai/v1/chat/completions
+
+Model:
+llama3-70b-8192
+
+Prompt format:
+
+User age: {age}
+Goal: {goal}
+
+Generate:
+1. A 15-year life timeline (year-by-year)
+2. Income progression over time
+3. Key life milestones
+4. Challenges or failures
+5. Final life outcome
+
+Keep it realistic but slightly optimistic.
+Keep output structured and clean.
+
+Return plain text or JSON.
+
+---
+
+🎨 UI COMPONENTS
+
+Create reusable components:
+- Hero
+- InputForm
+- Timeline
+- ResultCard
+
+Timeline style:
+- Vertical layout
+- Year on left, event on right
+- Minimal lines
+
+Cards:
+- Rounded corners
+- Border only
+- No shadow
+
+---
+
+✨ ANIMATIONS
+
+Use Framer Motion:
+- Fade in results
+- Slight upward motion
+
+---
+
+📁 PROJECT STRUCTURE
+
+app/
+  page.tsx
+  api/generate/route.ts
+
+components/
+  Hero.tsx
+  InputForm.tsx
+  Timeline.tsx
+  ResultCard.tsx
+
+---
+
+⚡ UX DETAILS
+
+- Disable button while loading
+- Smooth scroll to results
+- Clean transitions
+- Responsive design (mobile friendly)
+
+---
+
+🚀 OUTPUT QUALITY
+
+- Clean, readable code
+- Proper TypeScript types
+- Well-structured components
+- Production-ready for Vercel deployment
+
+---
+
+IMPORTANT:
+Focus on simplicity, premium design, and fast user experience.
+Do NOT overcomplicate.

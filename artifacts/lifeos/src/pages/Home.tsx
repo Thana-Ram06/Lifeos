@@ -61,7 +61,7 @@ export default function Home() {
       <header className="sticky top-0 z-50 w-full h-16 border-b border-border bg-background/90 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-6 md:px-10 h-full flex items-center justify-between">
           <a href="/" className="flex items-center gap-2.5" data-testid="navbar-logo">
-            <img src="/logo.jpeg" alt="LifeOS logo" className="w-8 h-8 rounded-full object-cover" />
+            <img src="/logo.jpeg" alt="LifeOS logo" className="w-8 h-8 rounded-md object-cover" />
             <span className="font-serif text-xl text-primary tracking-wide">LifeOS</span>
           </a>
           <div className="flex items-center gap-6">

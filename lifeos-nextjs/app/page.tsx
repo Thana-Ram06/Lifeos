@@ -118,10 +118,18 @@ export default function Home() {
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div className="min-h-screen w-full bg-background text-foreground font-sans transition-colors duration-200">
+      <div
+        className="min-h-screen w-full text-foreground font-sans relative transition-colors duration-200"
+        style={{
+          background:
+            "radial-gradient(ellipse at 15% 20%, rgba(59,130,246,0.18) 0%, transparent 50%), radial-gradient(ellipse at 85% 80%, rgba(168,85,247,0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 10%, rgba(249,115,22,0.1) 0%, transparent 40%), #0A0A0A",
+        }}
+      >
+        {/* Dark overlay */}
+        <div className="fixed inset-0 bg-black/40 pointer-events-none z-0" />
 
         {/* Navbar */}
-        <header className="sticky top-0 z-50 w-full h-16 border-b border-border bg-background/90 backdrop-blur-sm">
+        <header className="sticky top-0 z-50 w-full h-16 border-b border-white/10 bg-black/40 backdrop-blur-md">
           <div className="max-w-4xl mx-auto px-6 md:px-10 h-full flex items-center justify-between">
             <a href="/" className="flex items-center gap-2.5">
               <img src="/logo.jpeg" alt="LifeOS logo" className="w-8 h-8 rounded-lg object-cover" />
@@ -160,7 +168,7 @@ export default function Home() {
         </header>
 
         {/* Main */}
-        <main className="max-w-3xl mx-auto px-6 md:px-10 pb-32">
+        <main className="relative z-10 max-w-3xl mx-auto px-6 md:px-10 pb-32">
 
           {/* Hero */}
           <section className="pt-32 pb-14 flex flex-col items-center text-center space-y-6">
@@ -176,12 +184,8 @@ export default function Home() {
           </section>
 
           {/* Input card */}
-          <div className="rounded-2xl border border-border bg-card p-6 relative overflow-hidden backdrop-blur-md">
-            {/* Glow blobs */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-transparent blur-2xl opacity-60 pointer-events-none" />
-            <div className="absolute -top-10 -left-10 w-48 h-48 bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-purple-600/15 rounded-full blur-3xl pointer-events-none" />
-            <form onSubmit={handleGenerate} className="relative z-10 space-y-5">
+          <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-lg p-6 relative z-10">
+            <form onSubmit={handleGenerate} className="space-y-5">
               <div className="space-y-2">
                 <label
                   htmlFor="age"
@@ -198,7 +202,7 @@ export default function Home() {
                   value={age}
                   onChange={(e) => setAge(e.target.value)}
                   required
-                  className="w-full bg-transparent border border-border rounded-xl px-4 py-4 text-lg font-light text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                  className="w-full bg-black/60 border border-[#333] rounded-xl px-4 py-4 text-lg font-light text-white placeholder:text-gray-400 focus:outline-none focus:border-[#22C55E] transition-colors"
                 />
               </div>
 
@@ -216,7 +220,7 @@ export default function Home() {
                   onChange={(e) => setGoal(e.target.value)}
                   required
                   rows={4}
-                  className="w-full bg-transparent border border-border rounded-xl px-4 py-4 text-lg font-light text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors resize-none"
+                  className="w-full bg-black/60 border border-[#333] rounded-xl px-4 py-4 text-lg font-light text-white placeholder:text-gray-400 focus:outline-none focus:border-[#22C55E] transition-colors resize-none"
                 />
               </div>
 

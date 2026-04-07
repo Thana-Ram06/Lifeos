@@ -55,18 +55,10 @@ export default function Home() {
   })) || [];
 
   return (
-    <div
-      className="min-h-[100dvh] w-full text-foreground font-sans relative"
-      style={{
-        background:
-          "radial-gradient(ellipse at 15% 20%, rgba(59,130,246,0.18) 0%, transparent 50%), radial-gradient(ellipse at 85% 80%, rgba(168,85,247,0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 10%, rgba(249,115,22,0.1) 0%, transparent 40%), #0A0A0A",
-      }}
-    >
-      {/* Dark overlay for readability */}
-      <div className="fixed inset-0 bg-black/40 pointer-events-none z-0" />
+    <div className="min-h-[100dvh] w-full bg-background text-foreground font-sans">
 
       {/* Navbar */}
-      <header className="sticky top-0 z-50 w-full h-16 border-b border-white/10 bg-black/40 backdrop-blur-md">
+      <header className="sticky top-0 z-50 w-full h-16 border-b border-border bg-background/90 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-6 md:px-10 h-full flex items-center justify-between">
           <a href="/" className="flex items-center gap-2.5" data-testid="navbar-logo">
             <img src="/logo.jpeg" alt="LifeOS logo" className="w-8 h-8 rounded-lg object-cover" />
@@ -107,7 +99,7 @@ export default function Home() {
       </header>
 
       {/* Main content */}
-      <main className="relative z-10 max-w-3xl mx-auto px-6 md:px-10 pb-32">
+      <main className="max-w-3xl mx-auto px-6 md:px-10 pb-32">
 
         {/* Hero */}
         <section className="pt-32 pb-14 flex flex-col items-center text-center space-y-6">

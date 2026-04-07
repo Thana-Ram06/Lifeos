@@ -124,7 +124,7 @@ export default function Home() {
         <header className="sticky top-0 z-50 w-full h-16 border-b border-border bg-background/90 backdrop-blur-sm">
           <div className="max-w-4xl mx-auto px-6 md:px-10 h-full flex items-center justify-between">
             <a href="/" className="flex items-center gap-2.5">
-              <img src="/logo.jpeg" alt="LifeOS logo" className="w-8 h-8 rounded-md object-cover" />
+              <img src="/logo.jpeg" alt="LifeOS logo" className="w-8 h-8 rounded-lg object-cover" />
               <span className="font-serif text-xl text-primary tracking-wide">LifeOS</span>
             </a>
             <div className="flex items-center gap-6">
@@ -176,8 +176,12 @@ export default function Home() {
           </section>
 
           {/* Input card */}
-          <div className="rounded-2xl border border-border bg-card p-6">
-            <form onSubmit={handleGenerate} className="space-y-5">
+          <div className="rounded-2xl border border-border bg-card p-6 relative overflow-hidden backdrop-blur-md">
+            {/* Glow blobs */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-transparent blur-2xl opacity-60 pointer-events-none" />
+            <div className="absolute -top-10 -left-10 w-48 h-48 bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-purple-600/15 rounded-full blur-3xl pointer-events-none" />
+            <form onSubmit={handleGenerate} className="relative z-10 space-y-5">
               <div className="space-y-2">
                 <label
                   htmlFor="age"

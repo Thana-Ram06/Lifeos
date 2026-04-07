@@ -120,10 +120,10 @@ export default function Home() {
         </section>
 
         {/* Input form — card wrapper */}
-        <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-lg p-6 relative z-10">
+        <div className="rounded-2xl border border-[#1F1F1F] bg-[#111111] p-6">
           <form onSubmit={handleGenerate} className="space-y-5" data-testid="form-generate">
             <div className="space-y-2">
-              <label htmlFor="age" className="block text-xs font-medium text-muted-foreground tracking-widest uppercase">
+              <label htmlFor="age" className="block text-sm font-medium text-[#A1A1AA] tracking-wide uppercase">
                 Your Age
               </label>
               <input
@@ -135,13 +135,13 @@ export default function Home() {
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
                 required
-                className="w-full bg-black/60 border border-[#333] rounded-xl px-4 py-4 text-lg font-light text-white placeholder:text-gray-400 focus:outline-none focus:border-[#22C55E] transition-colors"
+                className="w-full bg-[#0F0F0F] border border-[#2A2A2A] rounded-xl px-4 py-4 text-lg font-light text-white placeholder:text-[#6B7280] focus:outline-none focus:border-green-500 transition-colors"
                 data-testid="input-age"
               />
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="goal" className="block text-xs font-medium text-muted-foreground tracking-widest uppercase">
+              <label htmlFor="goal" className="block text-sm font-medium text-[#A1A1AA] tracking-wide uppercase">
                 Your Goal
               </label>
               <textarea
@@ -151,7 +151,7 @@ export default function Home() {
                 onChange={(e) => setGoal(e.target.value)}
                 required
                 rows={4}
-                className="w-full bg-black/60 border border-[#333] rounded-xl px-4 py-4 text-lg font-light text-white placeholder:text-gray-400 focus:outline-none focus:border-[#22C55E] transition-colors resize-none"
+                className="w-full bg-[#0F0F0F] border border-[#2A2A2A] rounded-xl px-4 py-4 text-lg font-light text-white placeholder:text-[#6B7280] focus:outline-none focus:border-green-500 transition-colors resize-none"
                 data-testid="input-goal"
               />
             </div>
@@ -159,7 +159,7 @@ export default function Home() {
             <button
               type="submit"
               disabled={isPending || !age || !goal}
-              className="w-full sm:w-auto bg-[#22C55E] hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium text-base px-10 py-4 rounded-xl transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]"
+              className="w-full sm:w-auto bg-[#22C55E] hover:bg-[#16A34A] disabled:opacity-50 disabled:cursor-not-allowed text-black font-medium text-base px-10 py-4 rounded-xl transition-all duration-200 active:scale-[0.99]"
               data-testid="button-generate"
             >
               {isPending ? "Simulating your life..." : "Generate My Future"}
